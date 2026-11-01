@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#eef7ff" />
+  <title>Memory NEXUS | Memory Card Game</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Memory NEXUS home">
+      <span class="brand-mark" aria-hidden="true">🧠</span>
+      <span class="brand-copy">
+        <strong>MEMORY <span>NEXUS</span></strong>
+        <small>Interactive Memory Card Gaming Platform</small>
+      </span>
+    </a>
+
+    <div class="header-actions">
+      
+<button id="musicToggle" class="control-btn" type="button" aria-pressed="false">
+  🎵 Music Off
+</button>
+
+      <button class="icon-button" id="soundToggle"
+        type="button" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+        <label class="volume-control" for="volumeControl">
+    <span>Volume</span>
+    <input
+      id="volumeControl"
+      type="range"
+      min="0"
+      max="100"
+      value="35"
+    />
+  </label>
+      <button class="icon-button theme-button" id="themeToggle"
+        type="button" aria-label="Switch to dark mode" title="Switch theme">🌙</button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="brain-illustration">🧠</div>
+        <span class="floating-fruit fruit-one">🍓</span>
+        <span class="floating-fruit fruit-two">🍋</span>
+        <span class="floating-fruit fruit-three">🍇</span>
+        <span class="floating-star">🥭</span>
+      </div>
+
+      <div class="hero-copy">
+        <span class="eyebrow"> 🧠 COGNITIVE TRAINING · DAILY CHALLENGE</span>
+        <h1>Match the pairs.<br /><span>Beat your best.</span></h1>
+        <p>Flip two cards at a time, remember every fruit, and complete the board using the fewest moves possible.</p>
+        <button class="primary-button start-button" id="startBtn" type="button">
+          ▶ Start playing
+        </button>
+      </div>
+
+      <div class="hero-decoration decoration-one"></div>
+      <div class="hero-decoration decoration-two"></div>
+    </section>
+
+    <section class="dashboard-grid">
+      <div class="game-panel panel">
+        <div class="panel-head">
+          <div class="difficulty-wrap">
+            <span class="difficulty-label">🎯 Difficulty</span>
+            <div class="segmented" role="group" aria-label="Choose difficulty">
+              <button type="button" data-difficulty="easy">
+                Easy <small>8 pairs</small>
+              </button>
+              <button type="button" data-difficulty="medium" class="active">
+                Medium <small>12 pairs</small>
+              </button>
+              <button type="button" data-difficulty="hard">
+                Hard <small>18 pairs</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="run-controls">
+            <button class="secondary-button" id="pauseBtn" type="button">Ⅱ Pause</button>
+            <button class="secondary-button" id="restartBtn" type="button">↻ Restart</button>
+          </div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-card stat-time">
+            <span class="stat-icon">⏱️</span>
+            <div><small>TIME</small><strong id="timer">00:00</strong></div>
+          </div>
+          <div class="stat-card stat-moves">
+            <span class="stat-icon">🔄</span>
+            <div><small>MOVES</small><strong id="moves">0</strong></div>
+          </div>
+          <div class="stat-card stat-pairs">
+            <span class="stat-icon">🔗</span>
+            <div><small>PAIRS</small><strong id="pairs">0 / 12</strong></div>
+          </div>
+          <div class="stat-card stat-score">
+            <span class="stat-icon">🏆</span>
+            <div><small>SCORE</small><strong id="score">0</strong></div>
+          </div>
+        </div>
+
+        <div class="progress-heading">
+          <span>Game progress</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <div class="progress-track" role="progressbar"
+          aria-label="Game progress" aria-valuemin="0" aria-valuemax="100"
+          aria-valuenow="0" id="progressTrack">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="game-message" id="gameMessage" role="status" aria-live="polite">
+          Choose a difficulty and find all matching fruit pairs!
+        </div>
+
+        <div id="gameBoard" class="game-board" aria-label="Memory card board"></div>
+      </div>
+
+      <aside class="side-column">
+        <section class="player-card panel">
+          <div class="avatar" id="playerAvatar">N</div>
+          <div class="player-copy">
+            <span>PLAYER PROFILE</span>
+            <strong id="playerLabel">Guest Player</strong>
+            <small id="playerStatus">Ready for a new challenge</small>
+          </div>
+          <button class="edit-button" id="changeName" type="button">✎ Edit</button>
+        </section>
+
+        <section class="side-panel panel how-panel">
+          <span class="mini-label">HOW TO PLAY</span>
+          <h2>Memory is a<br /><span>muscle.</span></h2>
+          <p>Use the first few turns to map the board. Then hunt pairs strategically.</p>
+
+          <div class="tip tip-blue">
+            <span class="tip-number">01</span>
+            <div><strong>Flip</strong><small>Reveal two cards.</small></div>
+          </div>
+          <div class="tip tip-purple">
+            <span class="tip-number">02</span>
+            <div><strong>Remember</strong><small>Keep fruit locations in mind.</small></div>
+          </div>
+          <div class="tip tip-green">
+            <span class="tip-number">03</span>
+            <div><strong>Match</strong><small>Find both identical fruits.</small></div>
+          </div>
+        </section>
+
+        <section class="side-panel panel leaderboard-panel">
+          <div class="panel-title-row">
+            <div>
+              <span class="mini-label">PLAYER BOARD</span>
+              <h3>Top minds</h3>
+            </div>
+            <span class="live-pill"><span></span> READY</span>
+          </div>
+          <p class="leaderboard-note">Players who have joined this game.</p>
+          <ol class="leaderboard" id="leaderboard"></ol>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="footer">
+      <span>🧠 MEMORY NEXUS</span>
+      <span>Train your memory. Enjoy the challenge.</span>
+      <span>Developed by Nayab Chaudhary</span>
+    </footer>
+  </main>
+
+  <!-- Pause dialog -->
+  <div class="overlay hidden" id="pauseOverlay" role="dialog"
+    aria-modal="true" aria-labelledby="pauseTitle">
+    <div class="overlay-card">
+      <div class="overlay-icon">Ⅱ</div>
+      <span class="eyebrow">TAKE YOUR TIME</span>
+      <h2 id="pauseTitle">Game paused</h2>
+      <p>Your timer is paused too. Resume whenever you're ready.</p>
+      <button class="primary-button" id="resumeBtn" type="button">▶ Resume game</button>
+    </div>
+  </div>
+
+  <!-- Game completion dialog -->
+  <div class="overlay hidden" id="winOverlay" role="dialog"
+    aria-modal="true" aria-labelledby="winTitle">
+    <div class="overlay-card win-card">
+      <div class="overlay-icon trophy">🏆</div>
+      <span class="eyebrow">CHALLENGE COMPLETE</span>
+      
+      <h2 id="winTitle">Vault unlocked!</h2>
+      <p id="winSummary">Amazing! You found every pair.</p>
+      
+      
+<div id="nexusCelebration" class="nexus-celebration" aria-live="polite">
+  <div class="trophy-burst">🏆</div>
+  <h2>NEXUS MASTER UNLOCKED!</h2>
+  <p id="congratsMessage">
+    Amazing! You conquered the Nexus!
+  </p>
+  <div class="celebration-tags">
+    <span>✨ Memory Master</span>
+    <span>🎉 Victory Achieved</span>
+  </div>
+</div>
+
+<div id="fireworksLayer" class="fireworks-layer"
+     aria-hidden="true"></div>
+
+
+      <div class="result-grid">
+        <div><small>TIME</small><strong id="winTime">00:00</strong></div>
+        <div><small>MOVES</small><strong id="winMoves">0</strong></div>
+        <div><small>SCORE</small><strong id="winScore">0</strong></div>
+      </div>
+
+      <button class="primary-button" id="playAgainBtn" type="button">↻ Play again</button>
+      <button class="ghost-button" id="closeWinBtn" type="button">Back to board</button>
+    </div>
+  </div>
+
+  <!-- Player name dialog -->
+  <div class="overlay hidden" id="nameOverlay" role="dialog"
+    aria-modal="true" aria-labelledby="nameTitle">
+    <form class="overlay-card name-form" id="nameForm">
+      <div class="overlay-icon">👤</div>
+      <span class="eyebrow">PLAYER PROFILE</span>
+      <h2 id="nameTitle">What should we call you?</h2>
+      <p>Your name will appear on the player board.</p>
+      <label for="nameInput">Player name</label>
+      <input id="nameInput" class="name-input" type="text"
+        maxlength="24" placeholder="Enter your name" autocomplete="name" />
+      <button class="primary-button" type="submit">Save name</button>
+      <button class="ghost-button" id="skipNameBtn" type="button">Continue as Guest</button>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
